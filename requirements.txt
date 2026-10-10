@@ -1,7 +1,5 @@
-numpy
-pandas
-scikit-learn
-tensorflow
-joblib
 streamlit
-dvc
+tensorflow==2.21.0
+numpy
+scikit-learn
+joblib
