@@ -1,0 +1,5 @@
+outs:
+- md5: c0cd5dcc09fc82753fcf1333fb5ce670
+  size: 27742
+  hash: md5
+  path: iris_model.keras
