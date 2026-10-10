@@ -1,30 +1,31 @@
 
+import streamlit as st
 import numpy as np
 import joblib
 from tensorflow.keras.models import load_model
 
-# Load the saved model and scaler
+st.title("Iris Flower Classification")
+st.write("Predict the species using a trained neural network.")
+
 model = load_model("iris_model.keras")
 scaler = joblib.load("scaler.pkl")
 
 classes = ["setosa", "versicolor", "virginica"]
 
-# Enter flower measurements
-sepal_length = float(input("Enter sepal length: "))
-sepal_width = float(input("Enter sepal width: "))
-petal_length = float(input("Enter petal length: "))
-petal_width = float(input("Enter petal width: "))
+sepal_length = st.number_input("Sepal Length", 0.0, 10.0, 5.1)
+sepal_width = st.number_input("Sepal Width", 0.0, 10.0, 3.5)
+petal_length = st.number_input("Petal Length", 0.0, 10.0, 1.4)
+petal_width = st.number_input("Petal Width", 0.0, 10.0, 0.2)
 
-# Prepare and scale input
-flower = np.array([[
-    sepal_length, sepal_width,
-    petal_length, petal_width
-]])
+if st.button("Predict Species"):
+    flower = np.array([[
+        sepal_length, sepal_width,
+        petal_length, petal_width
+    ]])
 
-flower_scaled = scaler.transform(flower)
+    flower_scaled = scaler.transform(flower)
+    probabilities = model.predict(flower_scaled, verbose=0)
+    index = np.argmax(probabilities, axis=1)[0]
 
-# Predict flower species
-prediction = model.predict(flower_scaled, verbose=0)
-class_index = np.argmax(prediction, axis=1)[0]
-
-print("Predicted flower:", classes[class_index])
+    st.success(f"Predicted species: {classes[index]}")
+    st.write(f"Model confidence: {probabilities[0][index] * 100:.2f}%")
