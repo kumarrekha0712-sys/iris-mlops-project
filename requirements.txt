@@ -1,5 +1,7 @@
-streamlit
 tensorflow==2.20.0
-numpy
+streamlit
 scikit-learn
+numpy
+pandas
 joblib
+mlflow
